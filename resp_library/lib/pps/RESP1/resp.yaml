@@ -1,8 +1,8 @@
 name:   pps
-smiles: Sc1cccc(Sc2ccccc2)c1
+smiles: Sc1ccc(Sc2ccccc2)cc1
 
 conformer_generation:
-  n_conformers: 5
+  n_conformers: 2 
   rms_threshold: 0.5
   energy_threshold: 10  # kJ/mol
   random_seed: 1
@@ -15,4 +15,15 @@ resp:
     - 1.8
     - 2.0
   charge_constraints:
+    - [6] # S
+    - [1] # S
+    - [15] # H
   equality_constraints:
+    - [14, 3] # C
+    - [13, 4] # C
+    - [24, 16] # H
+    - [23, 17] # H
+    - [12, 8] # C
+    - [11, 9] # C
+    - [22, 18] # H
+    - [21, 19] # H

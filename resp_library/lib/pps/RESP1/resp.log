@@ -1,0 +1,177 @@
+RESP performed at: 2022-06-28 21:59:28.113082 UTC
+
+
+Loaded YAML file: resp.yaml
+----------------------------------------------------------------------------------------------------
+name:   pps
+smiles: Sc1ccc(Sc2ccccc2)cc1
+
+conformer_generation:
+  n_conformers: 2 
+  rms_threshold: 0.5
+  energy_threshold: 10  # kJ/mol
+  random_seed: 1
+
+resp:
+  type: RESP1
+  point_density: 3.0
+  vdw_scale_factors:
+    - 1.6
+    - 1.8
+    - 2.0
+  charge_constraints:
+    - [6] # S
+    - [1] # S
+    - [15] # H
+  equality_constraints:
+    - [14, 3] # C
+    - [13, 4] # C
+    - [24, 16] # H
+    - [23, 17] # H
+    - [12, 8] # C
+    - [11, 9] # C
+    - [22, 18] # H
+    - [21, 19] # H
+----------------------------------------------------------------------------------------------------
+
+The net charge is 0.
+Wrote all aligned to 'structures/aligned_conformers.xyz'.
+Wrote the final optimized gemoetries to 'optimized_geometries.pdb'.
+
+----------------------------------------------------------------------------------------------------
+VACUUM RESP
+Log from stage 1:
+----------------------------------------------------------------------------------------------------
+Electrostatic potential parameters
+    van der Waals radii (Angstrom):
+                                      S   1.800
+                                      C   1.700
+                                      H   1.200
+    VDW scale factors:                1.60  1.80  2.00
+    VDW point density:                3.000
+    ESP method:                       hf
+    ESP basis set:                    6-31g*
+
+Grid information (see 1_default_grid.dat in Angstrom)
+    Number of grid points:            3276
+
+Quantum electrostatic potential (see 1_default_grid_esp.dat)
+
+Grid information (see 2_default_grid.dat in Angstrom)
+    Number of grid points:            3257
+
+Quantum electrostatic potential (see 2_default_grid_esp.dat)
+
+Constraints
+
+Restraint
+    Hyperbolic restraint to a charge of zero
+    Hydrogen atoms are not restrained
+    resp_a:                           0.0005
+    resp_b:                           0.1000
+
+Fit
+
+Electrostatic Potential Charges
+   Center  Symbol       ESP      RESP
+      1    S      -0.23231868 -0.24229857
+      2    C      -0.20202954 -0.07375965
+      3    C       0.05820292 -0.08269896
+      4    C      -0.23874364 -0.05238277
+      5    C       0.19715949 -0.00562020
+      6    S      -0.23231154 -0.19218861
+      7    C       0.09890969  0.05134653
+      8    C      -0.07547197 -0.05325869
+      9    C      -0.19968050 -0.19496683
+     10    C      -0.12467736 -0.12740831
+     11    C      -0.23656115 -0.21697057
+     12    C      -0.02146827 -0.01729552
+     13    C      -0.35466202 -0.14064916
+     14    C       0.14212463 -0.03112642
+     15    H       0.18331933  0.18244987
+     16    H       0.11535547  0.13470389
+     17    H       0.14622867  0.11156786
+     18    H       0.11119711  0.10975969
+     19    H       0.16210332  0.15713247
+     20    H       0.15570023  0.15454001
+     21    H       0.16864104  0.15960784
+     22    H       0.10444995  0.10852086
+     23    H       0.19248508  0.14927042
+     24    H       0.08204773  0.11172480
+Total Charge:     -0.00000000 -0.00000000
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+VACUUM RESP
+Log from stage:
+----------------------------------------------------------------------------------------------------
+Electrostatic potential parameters
+
+Grid information (see 1_default_grid.dat in Angstrom)
+    Number of grid points:            3276
+
+Quantum electrostatic potential (see 1_default_grid_esp.dat)
+
+Grid information (see 2_default_grid.dat in Angstrom)
+    Number of grid points:            3257
+
+Quantum electrostatic potential (see 2_default_grid_esp.dat)
+
+Constraints
+    Charge constraints
+        Total charge of  -0.19218861 on the set   6
+        Total charge of  -0.24229857 on the set   1
+        Total charge of   0.18244987 on the set  15
+    Equality constraints
+        Equal charges on atoms
+                                 14   3
+                                 13   4
+                                 24  16
+                                 23  17
+                                 12   8
+                                 11   9
+                                 22  18
+                                 21  19
+
+Restraint
+    Hyperbolic restraint to a charge of zero
+    Hydrogen atoms are not restrained
+    resp_a:                           0.0010
+    resp_b:                           0.1000
+
+Fit
+
+Electrostatic Potential Charges
+   Center  Symbol       ESP      RESP
+      1    S      -0.24229857 -0.24229857
+      2    C      -0.11220052 -0.06804696
+      3    C       0.00252774 -0.06561791
+      4    C      -0.17416636 -0.08407896
+      5    C       0.06158564 -0.01685561
+      6    S      -0.19218861 -0.19218861
+      7    C      -0.01402340  0.04821765
+      8    C       0.04368531 -0.03595776
+      9    C      -0.28579325 -0.19554607
+     10    C      -0.05568918 -0.13884673
+     11    C      -0.28579325 -0.19554607
+     12    C       0.04368531 -0.03595776
+     13    C      -0.17416636 -0.08407896
+     14    C       0.00252774 -0.06561791
+     15    H       0.18244987  0.18244987
+     16    H       0.11348661  0.12418473
+     17    H       0.14697461  0.12826540
+     18    H       0.09376246  0.10930564
+     19    H       0.17407650  0.15479469
+     20    H       0.14325751  0.15686942
+     21    H       0.17407650  0.15479469
+     22    H       0.09376246  0.10930564
+     23    H       0.14697461  0.12826540
+     24    H       0.11348661  0.12418473
+Total Charge:      0.00000000  0.00000000
+----------------------------------------------------------------------------------------------------
+
+
+
+Full precision charges have been saved to 'results/charges_vacuum_full.out'.
+Rounded charges (3 decimals) have been saved to 'results/charges_vacuum_rounded.out'.
+END
