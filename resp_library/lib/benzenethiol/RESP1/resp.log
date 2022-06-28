@@ -1,0 +1,135 @@
+RESP performed at: 2022-06-28 21:36:36.609065 UTC
+
+
+Loaded YAML file: resp.yaml
+----------------------------------------------------------------------------------------------------
+name:   benzenethiol
+smiles: Sc1ccccc1
+
+conformer_generation:
+  n_conformers: 1 
+  rms_threshold: 0.5
+  energy_threshold: 10  # kJ/mol
+  random_seed: 1
+
+resp:
+  type: RESP1
+  point_density: 3.0
+  vdw_scale_factors:
+    - 1.6
+    - 1.8
+    - 2.0
+  charge_constraints:
+    - [1] # S
+    - [8] # H
+  equality_constraints:
+    - [9, 13] # H
+    - [10, 12] # H
+    - [3, 6] # C
+    - [4, 7] # C
+----------------------------------------------------------------------------------------------------
+
+The net charge is 0.
+Wrote all aligned to 'structures/aligned_conformers.xyz'.
+Wrote the final optimized gemoetries to 'optimized_geometries.pdb'.
+
+----------------------------------------------------------------------------------------------------
+VACUUM RESP
+Log from stage 1:
+----------------------------------------------------------------------------------------------------
+Electrostatic potential parameters
+    van der Waals radii (Angstrom):
+                                      S   1.800
+                                      C   1.700
+                                      H   1.200
+    VDW scale factors:                1.60  1.80  2.00
+    VDW point density:                3.000
+    ESP method:                       hf
+    ESP basis set:                    6-31g*
+
+Grid information (see 1_default_grid.dat in Angstrom)
+    Number of grid points:            2105
+
+Quantum electrostatic potential (see 1_default_grid_esp.dat)
+
+Constraints
+
+Restraint
+    Hyperbolic restraint to a charge of zero
+    Hydrogen atoms are not restrained
+    resp_a:                           0.0005
+    resp_b:                           0.1000
+
+Fit
+
+Electrostatic Potential Charges
+   Center  Symbol       ESP      RESP
+      1    S      -0.27602623 -0.27676737
+      2    C       0.00347755  0.04346642
+      3    C       0.06208746  0.00139450
+      4    C      -0.25341893 -0.17909120
+      5    C      -0.13892823 -0.20720836
+      6    C      -0.25029413 -0.17872574
+      7    C       0.04925682 -0.00769534
+      8    H       0.16715162  0.16674980
+      9    H       0.06226479  0.07354117
+     10    H       0.17175331  0.15577198
+     11    H       0.16461367  0.17576784
+     12    H       0.17216783  0.15690022
+     13    H       0.06589446  0.07589607
+Total Charge:      0.00000000  0.00000000
+----------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------
+VACUUM RESP
+Log from stage:
+----------------------------------------------------------------------------------------------------
+Electrostatic potential parameters
+
+Grid information (see 1_default_grid.dat in Angstrom)
+    Number of grid points:            2105
+
+Quantum electrostatic potential (see 1_default_grid_esp.dat)
+
+Constraints
+    Charge constraints
+        Total charge of  -0.27676737 on the set   1
+        Total charge of   0.16674980 on the set   8
+    Equality constraints
+        Equal charges on atoms
+                                  9  13
+                                 10  12
+                                  3   6
+                                  4   7
+
+Restraint
+    Hyperbolic restraint to a charge of zero
+    Hydrogen atoms are not restrained
+    resp_a:                           0.0010
+    resp_b:                           0.1000
+
+Fit
+
+Electrostatic Potential Charges
+   Center  Symbol       ESP      RESP
+      1    S      -0.27676737 -0.27676737
+      2    C       0.09494732  0.08703476
+      3    C      -0.07648016 -0.07365399
+      4    C      -0.07926485 -0.07636129
+      5    C      -0.31647167 -0.31310196
+      6    C      -0.07648016 -0.07365399
+      7    C      -0.07926485 -0.07636129
+      8    H       0.16674980  0.16674980
+      9    H       0.08620892  0.08686312
+     10    H       0.13645654  0.13339251
+     11    H       0.19770102  0.19560409
+     12    H       0.13645654  0.13339251
+     13    H       0.08620892  0.08686312
+Total Charge:      0.00000000  0.00000000
+----------------------------------------------------------------------------------------------------
+
+
+
+Full precision charges have been saved to 'results/charges_vacuum_full.out'.
+Rounded charges (3 decimals) have been saved to 'results/charges_vacuum_rounded.out'.
+END
