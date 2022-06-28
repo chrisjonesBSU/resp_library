@@ -27,7 +27,7 @@ from .exceptions import RESPLibraryError
 LIB_PATH = Path.joinpath(Path(__file__).parent, "lib/")
 
 
-def retrieve_charges(smiles, resp_type, delta=0.6, filen=None):
+def retrieve_charges(smiles, resp_type, name=None, delta=0.6, filen=None):
     """Retrieve the charges for the molecule with the provided smiles string
 
     Returns an rdkit molecule with the charges stored as
@@ -61,11 +61,12 @@ def retrieve_charges(smiles, resp_type, delta=0.6, filen=None):
         if no charges are found
     """
     smiles = canonicalize_smiles(smiles)
-    iupac_name = smiles_to_iupac(smiles)
-    mol_path = Path.joinpath(LIB_PATH, iupac_name)
+    if name is None:
+        name = smiles_to_iupac(smiles)
+    mol_path = Path.joinpath(LIB_PATH, name)
     if not mol_path.is_dir():
         raise RESPLibraryError(
-            f"The molecule: {iupac_name} with smiles string: {smiles} "
+            f"The molecule: {name} with smiles string: {smiles} "
             f"does not exist in the library."
         )
     resp_type = resp_type.upper()
@@ -78,7 +79,7 @@ def retrieve_charges(smiles, resp_type, delta=0.6, filen=None):
         charges_path = Path.joinpath(resp_path, "results/charges_vacuum_full.out")
         if not charges_path.is_file():
             raise RESPLibraryError(
-                f"The RESP1 charges do not exist for molecule: {iupac_name} "
+                f"The RESP1 charges do not exist for molecule: {name} "
                 f"with smiles string: {smiles}."
             )
         charges = []
@@ -92,7 +93,7 @@ def retrieve_charges(smiles, resp_type, delta=0.6, filen=None):
         pcm_path = Path.joinpath(resp_path, "results/charges_pcm_full.out")
         if not vacuum_path.is_file() or not pcm_path.is_file():
             raise RESPLibraryError(
-                f"The RESP2 charges do not exist for molecule: {iupac_name} "
+                f"The RESP2 charges do not exist for molecule: {name} "
                 f"with smiles string: {smiles}."
             )
         vacuum_charges = []
@@ -134,7 +135,7 @@ def retrieve_charges(smiles, resp_type, delta=0.6, filen=None):
 """
 
 
-def prepare_charge_calculation(smiles):
+def prepare_charge_calculation(smiles, name=None):
     """Setup the directories/templates for the charge calculation for a molecule
     defined by smiles
 
@@ -142,6 +143,8 @@ def prepare_charge_calculation(smiles):
     ----------
     smiles: str
         the smiles string of the desired molecule
+    name: str
+        Override setting the IUPAC name
 
     Returns
     -------
@@ -149,12 +152,13 @@ def prepare_charge_calculation(smiles):
 
     """
     smiles = canonicalize_smiles(smiles)
-    iupac_name = smiles_to_iupac(smiles)
-    mol_path = Path.joinpath(LIB_PATH, iupac_name)
+    if not name:
+        name = smiles_to_iupac(smiles)
+    mol_path = Path.joinpath(LIB_PATH, name)
     if mol_path.is_dir():
         raise RESPLibraryError(
             f"The directory for the molecule: '{smiles}' with name "
-            f"{iupac_name} already exists."
+            f"{name} already exists."
         )
 
     mol_path.mkdir()
@@ -175,10 +179,10 @@ def prepare_charge_calculation(smiles):
         resp_path.mkdir()
         yaml_path = Path.joinpath(resp_path, "resp.yaml")
         with yaml_path.open("w") as f:
-            f.write(yaml_template(smiles, iupac_name, resp_type))
+            f.write(yaml_template(smiles, name, resp_type))
 
 
-def calculate_charges(smiles, resp_type, overwrite=False):
+def calculate_charges(smiles, resp_type, name=None, overwrite=False):
     """Run the charge calculation for the molecule defined by smiles
 
     Parameters
@@ -198,12 +202,13 @@ def calculate_charges(smiles, resp_type, overwrite=False):
         if the smiles string is invalid
     """
     smiles = canonicalize_smiles(smiles)
-    iupac_name = smiles_to_iupac(smiles)
-    mol_path = Path.joinpath(LIB_PATH, iupac_name)
+    if not name:
+        name = smiles_to_iupac(smiles)
+    mol_path = Path.joinpath(LIB_PATH, name)
     if not mol_path.is_dir():
         raise RESPLibraryError(
             f"The directory for the molecule: '{smiles}' with name "
-            f"{iupac_name} does not exist. Please run "
+            f"{name} does not exist. Please run "
             "resp_library.prepare_charge_calculation() first."
         )
 

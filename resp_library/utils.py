@@ -57,10 +57,10 @@ def smiles_to_iupac(smiles):
     return iupac_name.lower().replace(" ", "_")
 
 
-def yaml_template(smiles, iupac_name, resp_type):
+def yaml_template(smiles, name, resp_type):
     """Generate a template YAML file"""
 
-    template = f"""name:   {iupac_name}
+    template = f"""name:   {name}
 smiles: {smiles}
 
 conformer_generation:
