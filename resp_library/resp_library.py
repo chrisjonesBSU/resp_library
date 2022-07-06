@@ -135,25 +135,34 @@ def retrieve_charges(smiles, resp_type, name=None, delta=0.6, filen=None):
 """
 
 
-def prepare_charge_calculation(smiles, name=None):
+def prepare_charge_calculation(smiles=None, name=None, mol_file=None):
     """Setup the directories/templates for the charge calculation for a molecule
     defined by smiles
 
     Parameters
     ----------
-    smiles: str
+    smiles: str, default None
         the smiles string of the desired molecule
-    name: str
+    name: str, default None
         Override setting the IUPAC name
+    mol_file : str, default None
+        Path to a file to load into rdkit
 
     Returns
     -------
 
 
     """
-    smiles = canonicalize_smiles(smiles)
-    if not name:
+    if smiles and mol_file:
+        raise RESPLibraryError(
+                "Only one of `smiles` and `mol_file` can be used to provide "
+                "structure information."
+        )
+    if smiles and not name:
+        smiles = canonicalize_smiles(smiles)
+    if smiles and not name:
         name = smiles_to_iupac(smiles)
+
     mol_path = Path.joinpath(LIB_PATH, name)
     if mol_path.is_dir():
         raise RESPLibraryError(
@@ -162,7 +171,11 @@ def prepare_charge_calculation(smiles, name=None):
         )
 
     mol_path.mkdir()
-    rdmol = Chem.MolFromSmiles(smiles)
+    if smiles:
+        rdmol = Chem.MolFromSmiles(smiles)
+    elif mol_file:
+        rdmol = Chem.MolFromMol2File(mol_file)
+
     rdmol = Chem.AddHs(rdmol)
     cid = AllChem.EmbedMolecule(rdmol, randomSeed=1)
     if cid == -1:
@@ -182,17 +195,20 @@ def prepare_charge_calculation(smiles, name=None):
             f.write(yaml_template(smiles, name, resp_type))
 
 
-def calculate_charges(smiles, resp_type, name=None, overwrite=False):
+def calculate_charges(resp_type, smiles=None, name=None, overwrite=False):
     """Run the charge calculation for the molecule defined by smiles
 
     Parameters
     ----------
-    smiles: str
-        the smiles string of the desired molecule
     resp_type: str
         the type of RESP to perform (RESP1 or RESP2)
+    smiles: str
+        the smiles string of the desired molecule
+    name: str
+        the name of the desired molecule
     overwrite: boolean, optional, default=False
         overwrite the previous results if they exist
+
     Returns
     -------
 
@@ -200,10 +216,13 @@ def calculate_charges(smiles, resp_type, name=None, overwrite=False):
     ------
     InvalidMoleculeError
         if the smiles string is invalid
+
     """
-    smiles = canonicalize_smiles(smiles)
-    if not name:
+    if smiles:
+        smiles = canonicalize_smiles(smiles)
+    if smiles and not name:
         name = smiles_to_iupac(smiles)
+
     mol_path = Path.joinpath(LIB_PATH, name)
     if not mol_path.is_dir():
         raise RESPLibraryError(
@@ -250,7 +269,10 @@ def calculate_charges(smiles, resp_type, name=None, overwrite=False):
         )
 
     # Create the molecule, add H's
-    rdmol = Chem.MolFromSmiles(smiles)
+    if smiles:
+        rdmol = Chem.MolFromSmiles(smiles)
+    elif mol_file:
+        rdmol = Chem.MolFromMol2File(mol_file)
     rdmol = Chem.AddHs(rdmol)
 
     # Get the net charge
